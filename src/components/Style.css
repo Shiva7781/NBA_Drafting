@@ -1,18 +1,21 @@
 .Nav {
     height: 51px;
     margin: auto;
-    vertical-align: middle;
+    margin-bottom: 1%;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: aqua;
-    margin-bottom: 1%;
+    padding: 7px;
+
+
 }
 
 .Nav a {
     padding: 11px;
     text-decoration: none;
-    font-size: 21px;
+    /* font-size: 21px; */
+    font-size: xx-large;
 }
 
 .Nav a:hover {
@@ -22,11 +25,31 @@
 
 /* Players */
 
+.PlayerNameInput label,
+input {
+    vertical-align: middle;
+    font-size: large;
+    font-weight: 500;
+    margin: 0.7%;
+}
+
 .Players {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 21px;
-    margin: 1%;
+    margin: 2% 1% 2% 1%;
+}
+
+@media only screen and (min-width: 721px) and (max-width: 1080px) {
+    .Players {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .Players {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .Players>div {
@@ -102,7 +125,6 @@ img {
     /* border: 1px solid red; */
 }
 
-
 .Games {
     width: 75%;
     margin: auto;
@@ -155,7 +177,6 @@ p {
 }
 
 .TIE {
-
     color: rgb(163, 196, 96);
     background-color: rgb(251, 221, 221);
     border-radius: 7px;

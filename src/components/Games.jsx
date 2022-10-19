@@ -3,22 +3,19 @@ import "./Style.css";
 import axios from "axios";
 
 const Games = () => {
-  const [startDate, setStartDate] = useState("2010-01-10");
-  const [endDate, setEndDate] = useState("2010-07-07");
-
-  // const [seasonFilter, setSeasonFilter] = useState("");
-
   const [gamesData, setGamesData] = useState([]);
 
-  useEffect(() => {
-    displayGames();
+  const [startDate, setStartDate] = useState("2010-01-10");
+  const [endDate, setEndDate] = useState("2011-04-02");
 
+  useEffect(() => {
     // console.log(startDate, endDate);
 
+    displayGames();
     // eslint-disable-next-line
   }, [startDate, endDate]);
 
-  const displayGames = () => {
+  const displayGames = async () => {
     // console.log(startDate, endDate);
 
     axios
@@ -36,39 +33,61 @@ const Games = () => {
 
   const handleSeasonFilter = (e) => {
     const value = e.target.value;
-    console.log("handleSeasonFilter", value);
+    // console.log("handleSeasonFilter", value);
+
+    let arrYYYY = value.split("");
+    let lastYY = arrYYYY[2] + arrYYYY[3];
+    // console.log("lastYY:", lastYY);
+
+    let newStartDate = `${value.slice(0, 2)}${+lastYY + 1}-01-01`;
+    // console.log("newStartDate:", newStartDate);
+
+    let newEndDate = `${value.slice(0, 2)}${+lastYY + 1}-12-31`;
+    // console.log("newEndDate:", newEndDate);
+
+    setStartDate(newStartDate);
+    setEndDate(newEndDate);
   };
 
   const handleDate = (e) => {
     const field = e.target.name;
     const value = e.target.value;
 
-    // console.log(value);
+    // console.log("value:", value);
 
-    let finalDD = value.slice(8);
-    // console.log("finalDD:", finalDD);
+    if (field === "startDate") {
+      let finalDDend = endDate.slice(8);
 
-    let finalMM = value.slice(5, 7);
-    // console.log("finalMM:", finalMM);
+      let finalMMend = endDate.slice(5, 7);
 
-    if (field == "startDate") {
-      let endYYYY = value.split("").splice(0, 3);
-      endYYYY.push(Number(value[3]) + 1);
-      const finalEndYYYY = `${endYYYY.join("")}-${finalMM}-${finalDD}`;
+      let endYYYY = value.split("").splice(0, 2);
+      let ans1 = value[2] + value[3];
 
-      // console.log("finalEndYYYY:", finalEndYYYY);
+      endYYYY.push(Number(ans1) + 1);
+      // console.log("endYYYY:", endYYYY);
+
+      const D_EndYYY = `${endYYYY.join("")}-${finalMMend}-${finalDDend}`;
+      // console.log("D_EndYYY:", D_EndYYY);
 
       setStartDate(value);
-      setEndDate(finalEndYYYY);
+      setEndDate(D_EndYYY);
+
       //
-    } else if (field == "endDate") {
-      let startYYYY = value.split("").splice(0, 3);
-      startYYYY.push(Number(value[3]) - 1);
-      const finalStartYYYY = `${startYYYY.join("")}-${finalMM}-${finalDD}`;
+    } else if (field === "endDate") {
+      let finalDDstart = startDate.slice(8);
 
-      // console.log("finalStartYYYY:", finalStartYYYY);
+      let finalMMstart = startDate.slice(5, 7);
 
-      setStartDate(finalStartYYYY);
+      let startYYYY = value.split("").splice(0, 2);
+      let ans2 = value[2] + value[3];
+
+      startYYYY.push(Number(ans2) - 1);
+      // console.log("startYYYY:", startYYYY);
+
+      const D_StrYYY = `${startYYYY.join("")}-${finalMMstart}-${finalDDstart}`;
+      // console.log("D_StrYYY:", D_StrYYY);
+
+      setStartDate(D_StrYYY);
       setEndDate(value);
     }
   };
@@ -88,13 +107,9 @@ const Games = () => {
         </div>
 
         <div>
-          <label htmlFor="">Seasons Filter</label>
+          <label htmlFor="ssnFilter">Seasons Filter</label>
           <br />
-          <select
-            name=""
-            // value={seasonFilter}
-            onChange={handleSeasonFilter}
-          >
+          <select name="ssnFilter" onChange={handleSeasonFilter}>
             <option>2010</option>
             <option>2011</option>
             <option>2012</option>
@@ -122,21 +137,13 @@ const Games = () => {
         </div>
       </div>
 
-      {gamesData
+      {gamesData &&
+        gamesData.map((ele, i) => {
+          let Z = ele.date;
+          // console.log("Z:", Z);
 
-        // .filter((val) => {
-        //   // console.log("current season:", val.season);
-
-        //   return val.season.toString().includes(seasonFilter.toString());
-        //   // return val.season.toString().includes(seasonFilter.toString());
-        // })
-
-        .map((ele, i) => {
-          let DateFormated = new Date(ele.date);
-          // console.log("DateFormated:", DateFormated);
-
-          let displayDate = `${DateFormated.getDay()}-${DateFormated.getMonth()}-${DateFormated.getFullYear()}`;
-          // console.log("displayDate:", displayDate);
+          let D_Date = `${Z.slice(0, 4)}-${Z.slice(5, 7)}-${Z.slice(8, 10)}`;
+          // console.log("D_Date:", D_Date);
 
           return (
             <div className="Games" key={i}>
@@ -163,7 +170,7 @@ const Games = () => {
                       : "TIE"}
                   </h3>
                 </span>
-                <p>Date: {displayDate}</p>
+                <p>Date: {D_Date}</p>
                 <p>Season: {ele.season}</p>
                 <p>Status: {ele.status}</p>
                 <p>Home Team Score: {ele.home_team_score}</p>
@@ -195,7 +202,7 @@ const Games = () => {
                       : "TIE"}
                   </h3>
                 </span>
-                <p>Date: {displayDate}</p>
+                <p>Date: {D_Date}</p>
                 <p>Season: {ele.season}</p>
                 <p>Status: {ele.status}</p>
                 <p>Visitor Team Score: {ele.visitor_team_score}</p>
