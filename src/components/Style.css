@@ -34,7 +34,7 @@
     place-items: center;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 7px;
-    padding: 11px 0px 11px 0px;
+    padding: 21px 0px 21px 0px;
     /* border: 1px solid red; */
 }
 
@@ -61,14 +61,11 @@ img {
     background-color: rgb(145, 59, 145);
     color: white;
     cursor: pointer;
-
 }
 
 .Players button:hover {
     background-color: coral;
 }
-
-
 
 .DetailsDiv {
     /* display: none; */
@@ -78,8 +75,6 @@ img {
     margin-bottom: 7px;
     /* border: 1px solid red; */
 }
-
-
 
 .DetailsDiv p {
     text-align: start;
@@ -93,28 +88,75 @@ img {
 
 /* Games */
 
-.Games,
 .AllInput {
     display: flex;
+    align-items: center;
     justify-content: center;
+    margin-bottom: 1%;
+
+    /* border: 1px solid red; */
 }
 
-.Games h2 {
-    margin-top: 200px;
+.AllInput div {
+    margin: 0px 7% 0px 7%;
+    /* border: 1px solid red; */
 }
 
-.LeftInput,
-.RightInput {
-    margin: 51px;
-    margin-top: 0px;
+
+.Games {
+    width: 75%;
+    margin: auto;
+    margin-bottom: 1%;
+    border-radius: 7px;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(201, 233, 223);
+
+    /* border: 1px solid red; */
 }
 
 .Left,
 .Right {
-    border: 1px solid red;
-    padding: 51px;
+    padding: 75px;
+    margin: 0px 7px 0px 7px;
+
+    /* border: 1px solid red; */
+}
+
+.Games h2 {
+    margin-top: 25%;
 }
 
 p {
     text-align: left;
+}
+
+.Result {
+    display: flex;
+}
+
+.Result h3 {
+    padding: 7px;
+    margin-right: 7px;
+
+    /* border: 1px solid red; */
+}
+
+.WON {
+    color: green;
+    background-color: rgb(251, 221, 221);
+    border-radius: 7px;
+}
+
+.LOST {
+    color: red;
+    background-color: rgb(251, 221, 221);
+    border-radius: 7px;
+}
+
+.TIE {
+
+    color: rgb(163, 196, 96);
+    background-color: rgb(251, 221, 221);
+    border-radius: 7px;
 }
