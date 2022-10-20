@@ -1,14 +1,12 @@
 .Nav {
+    width: 100%;
     height: 51px;
-    margin: auto;
     margin-bottom: 1%;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: aqua;
     padding: 7px;
-
-
 }
 
 .Nav a {
@@ -38,18 +36,6 @@ input {
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 21px;
     margin: 2% 1% 2% 1%;
-}
-
-@media only screen and (min-width: 721px) and (max-width: 1080px) {
-    .Players {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-@media screen and (max-width: 720px) {
-    .Players {
-        grid-template-columns: repeat(2, 1fr);
-    }
 }
 
 .Players>div {
@@ -90,23 +76,36 @@ img {
     background-color: coral;
 }
 
-.DetailsDiv {
-    /* display: none; */
+.NO_DetailsDiv {
+    display: none;
+}
 
+.DetailsDiv {
     width: 50%;
     margin-top: 7px;
     margin-bottom: 7px;
-    /* border: 1px solid red; */
 }
 
 .DetailsDiv p {
     text-align: start;
     margin: 7px 0px 0px 0px;
-    /* border: 1px solid red; */
 }
 
 .DetailsDiv h2 {
     text-align: start;
+}
+
+@media only screen and (min-width: 721px) and (max-width: 1442px) {
+    .Players {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .Players {
+        grid-template-columns: repeat(1, 1fr);
+        margin: 3%;
+    }
 }
 
 /* Games */
@@ -180,4 +179,33 @@ p {
     color: rgb(163, 196, 96);
     background-color: rgb(251, 221, 221);
     border-radius: 7px;
+}
+
+@media screen and (max-width: 720px) {
+    .AllInput div {
+        margin: 0%;
+    }
+
+    .Games {
+        width: 88%;
+        padding: 3%;
+    }
+
+    .Left,
+    .Right {
+        padding: 0px;
+        margin: 0%;
+    }
+
+    .Games h2 {
+        padding: 3%;
+    }
+
+    .Result {
+        display: grid;
+    }
+
+    .Result h3 {
+        margin: auto;
+    }
 }

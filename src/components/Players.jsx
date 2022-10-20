@@ -4,6 +4,7 @@ import axios from "axios";
 
 const Players = () => {
   const [searchName, setSearchName] = useState("");
+  const [selected, setSelected] = useState();
 
   const [playersData, setPlayersData] = useState([]);
   // console.log("PlayersData:", playersData);
@@ -14,7 +15,7 @@ const Players = () => {
 
   const displayPlayes = () => {
     axios
-      .get("https://www.balldontlie.io/api/v1/players")
+      .get(`https://www.balldontlie.io/api/v1/players`)
       .then((res) => {
         // console.log(res.data.data);
         setPlayersData(res.data.data);
@@ -22,6 +23,37 @@ const Players = () => {
       .catch((err) => {
         console.log(err.message);
       });
+  };
+
+  const searchPlayer = (e) => {
+    let NameValue = e.target.value;
+
+    // console.log("value:", NameValue);
+    setSearchName(NameValue);
+
+    setTimeout(() => {
+      getPlayerByName();
+    }, 1000);
+  };
+
+  const getPlayerByName = () => {
+    // console.log("searchName", searchName);
+
+    axios
+      .get(`https://www.balldontlie.io/api/v1/players?search=${searchName}`)
+      .then((res) => {
+        // console.log(res.data.data);
+        setPlayersData(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  const teamDetails = (i) => {
+    // console.log("teamDetails", i);
+
+    setSelected(i);
   };
 
   return (
@@ -32,18 +64,17 @@ const Players = () => {
           type="text"
           value={searchName}
           placeholder="Search here..."
-          onChange={(ev) => setSearchName(ev.target.value)}
+          onChange={searchPlayer}
         />
       </div>
 
       <div className="Players">
         {playersData
-          .filter((val) => {
-            return val.first_name
-              .toLowerCase()
-              .includes(searchName.toLowerCase());
-          })
-
+          // .filter((val) => {
+          //   return val.first_name
+          //     .toLowerCase()
+          //     .includes(searchName.toLowerCase());
+          // })
           .map((e, i) => {
             return (
               <div key={i}>
@@ -55,9 +86,11 @@ const Players = () => {
                   Name: {e.first_name} {e.last_name}
                 </p>
                 <p>Position: {e.position}</p>
-                <button>TEAM DETAILS</button>
+                <button onClick={() => teamDetails(i)}>TEAM DETAILS</button>
 
-                <div className="DetailsDiv">
+                <div
+                  className={selected === i ? "DetailsDiv" : "NO_DetailsDiv"}
+                >
                   <h2>Team Details</h2>
                   <p>Team: {e.team["full_name"]}</p>
                   <p>Abbr: {e.team["abbreviation"]}</p>
