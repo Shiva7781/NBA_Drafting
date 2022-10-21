@@ -1,5 +1,5 @@
 .Nav {
-    width: 100%;
+    width: 99%;
     height: 51px;
     margin-bottom: 1%;
     display: flex;
@@ -47,7 +47,7 @@ input {
     /* border: 1px solid red; */
 }
 
-img {
+.Players img {
     width: 151px;
     height: fit-content;
     border-radius: 51%;
@@ -125,7 +125,8 @@ img {
 }
 
 .Games {
-    width: 75%;
+    width: 55%;
+    height: fit-content;
     margin: auto;
     margin-bottom: 1%;
     border-radius: 7px;
@@ -138,14 +139,23 @@ img {
 
 .Left,
 .Right {
-    padding: 75px;
-    margin: 0px 7px 0px 7px;
+    margin: 7px;
 
     /* border: 1px solid red; */
 }
 
+.Games img {
+    width: 111px;
+    height: fit-content;
+    border-radius: 51%;
+    margin-bottom: 3%;
+}
+
 .Games h2 {
-    margin-top: 25%;
+    margin-top: 21%;
+    padding: 0px 7px 0px 7px;
+
+    /* border: 1px solid red; */
 }
 
 p {
@@ -184,6 +194,10 @@ p {
 @media screen and (max-width: 720px) {
     .AllInput div {
         margin: 0%;
+    }
+
+    .AllInput input {
+        width: 111px;
     }
 
     .Games {

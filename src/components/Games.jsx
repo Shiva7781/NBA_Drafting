@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./Style.css";
 import axios from "axios";
+import ReactPaginate from "react-paginate";
+import "./PaginationComp.css";
 
 const Games = () => {
+  const [loading, setLoading] = useState(true);
   const [gamesData, setGamesData] = useState([]);
 
   const [startDate, setStartDate] = useState("2010-01-10");
   const [endDate, setEndDate] = useState("2011-04-02");
+
+  const [seasonState, setSeasonState] = useState("");
 
   useEffect(() => {
     // console.log(startDate, endDate);
@@ -25,35 +30,18 @@ const Games = () => {
       .then((res) => {
         // console.log(res.data.data);
         setGamesData(res.data.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err.message);
       });
   };
 
-  const handleSeasonFilter = (e) => {
-    const value = e.target.value;
-    // console.log("handleSeasonFilter", value);
-
-    let arrYYYY = value.split("");
-    let lastYY = arrYYYY[2] + arrYYYY[3];
-    // console.log("lastYY:", lastYY);
-
-    let newStartDate = `${value.slice(0, 2)}${+lastYY + 1}-01-01`;
-    // console.log("newStartDate:", newStartDate);
-
-    let newEndDate = `${value.slice(0, 2)}${+lastYY + 1}-12-31`;
-    // console.log("newEndDate:", newEndDate);
-
-    setStartDate(newStartDate);
-    setEndDate(newEndDate);
-  };
-
   const handleDate = (e) => {
     const field = e.target.name;
     const value = e.target.value;
 
-    // console.log("value:", value);
+    // console.log("field", "value:", field, value);
 
     if (field === "startDate") {
       let finalDDend = endDate.slice(8);
@@ -92,6 +80,126 @@ const Games = () => {
     }
   };
 
+  const handleSeasonFilter = (e) => {
+    const value = e.target.value;
+    // console.log("handleSeasonFilter", value);
+
+    setLoading(true);
+    setSeasonState(value);
+
+    let arrYYYY = value.split("");
+    let lastYY = arrYYYY[2] + arrYYYY[3];
+    // console.log("lastYY:", lastYY);
+
+    let newStartDate = `${value.slice(0, 2)}${+lastYY + 1}-01-01`;
+    // console.log("newStartDate:", newStartDate);
+
+    let newEndDate = `${value.slice(0, 2)}${+lastYY + 1}-12-31`;
+    // console.log("newEndDate:", newEndDate);
+
+    setStartDate(newStartDate);
+    setEndDate(newEndDate);
+  };
+
+  /** Pagination Part */
+
+  const PER_PAGE = 7;
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const handlePageClick = ({ selected: selectedPage }) => {
+    // console.log("selectedPage:", selectedPage);
+    setCurrentPage(selectedPage);
+  };
+
+  // 0, 10, 20, 30...
+  const offset = currentPage * PER_PAGE;
+  // console.log("offset:", offset);
+
+  const currentPageData = gamesData
+    .slice(offset, offset + PER_PAGE)
+    .map((ele, i) => {
+      let Z = ele.date;
+      // console.log("Z:", Z);
+
+      let D_Date = `${Z.slice(0, 4)}-${Z.slice(5, 7)}-${Z.slice(8, 10)}`;
+      // console.log("D_Date:", D_Date);
+
+      return (
+        <div className="Games" key={i}>
+          <div className="Left">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ89WO_fHZw0T-t0u34FnvUtmuVYTvDkaY9ROJEDwe2Dw&s"
+              alt="bl"
+            />
+            <span className="Result">
+              <h3>{ele.home_team.full_name} </h3>
+              <h3
+                className={
+                  ele.home_team_score > ele.visitor_team_score
+                    ? "WON"
+                    : ele.home_team_score < ele.visitor_team_score
+                    ? "LOST"
+                    : "TIE"
+                }
+              >
+                {ele.home_team_score > ele.visitor_team_score
+                  ? "WON"
+                  : ele.home_team_score < ele.visitor_team_score
+                  ? "LOST"
+                  : "TIE"}
+              </h3>
+            </span>
+            <p>Date: {D_Date}</p>
+            <p>Season: {ele.season}</p>
+            <p>Status: {ele.status}</p>
+            <p>Home Team Score: {ele.home_team_score}</p>
+            <p>Division: {ele.home_team.division}</p>
+          </div>
+
+          <h2>VS</h2>
+
+          <div className="Right">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ89WO_fHZw0T-t0u34FnvUtmuVYTvDkaY9ROJEDwe2Dw&s"
+              alt="bl"
+            />
+            <span className="Result">
+              <h3 className="Result">{ele.visitor_team.full_name} </h3>
+              <h3
+                className={
+                  ele.home_team_score < ele.visitor_team_score
+                    ? "WON"
+                    : ele.home_team_score > ele.visitor_team_score
+                    ? "LOST"
+                    : "TIE"
+                }
+              >
+                {ele.home_team_score < ele.visitor_team_score
+                  ? "WON"
+                  : ele.home_team_score > ele.visitor_team_score
+                  ? "LOST"
+                  : "TIE"}
+              </h3>
+            </span>
+            <p>Date: {D_Date}</p>
+            <p>Season: {ele.season}</p>
+            <p>Status: {ele.status}</p>
+            <p>Visitor Team Score: {ele.visitor_team_score}</p>
+            <p>Division: {ele.visitor_team.division}</p>
+          </div>
+        </div>
+      );
+    });
+
+  // total page: 500
+  const pageCount = Math.ceil(gamesData.length / PER_PAGE);
+
+  /** Pagination Part */
+
+  if (loading) {
+    return <h3>Loading...</h3>;
+  }
+
   return (
     <>
       <div className="AllInput">
@@ -109,7 +217,11 @@ const Games = () => {
         <div>
           <label htmlFor="ssnFilter">Seasons Filter</label>
           <br />
-          <select name="ssnFilter" onChange={handleSeasonFilter}>
+          <select
+            name="ssnFilter"
+            value={seasonState}
+            onChange={handleSeasonFilter}
+          >
             <option>2010</option>
             <option>2011</option>
             <option>2012</option>
@@ -137,80 +249,19 @@ const Games = () => {
         </div>
       </div>
 
-      {gamesData &&
-        gamesData.map((ele, i) => {
-          let Z = ele.date;
-          // console.log("Z:", Z);
+      {currentPageData}
 
-          let D_Date = `${Z.slice(0, 4)}-${Z.slice(5, 7)}-${Z.slice(8, 10)}`;
-          // console.log("D_Date:", D_Date);
-
-          return (
-            <div className="Games" key={i}>
-              <div className="Left">
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ89WO_fHZw0T-t0u34FnvUtmuVYTvDkaY9ROJEDwe2Dw&s"
-                  alt="bl"
-                />
-                <span className="Result">
-                  <h3>{ele.home_team.full_name} </h3>
-                  <h3
-                    className={
-                      ele.home_team_score > ele.visitor_team_score
-                        ? "WON"
-                        : ele.home_team_score < ele.visitor_team_score
-                        ? "LOST"
-                        : "TIE"
-                    }
-                  >
-                    {ele.home_team_score > ele.visitor_team_score
-                      ? "WON"
-                      : ele.home_team_score < ele.visitor_team_score
-                      ? "LOST"
-                      : "TIE"}
-                  </h3>
-                </span>
-                <p>Date: {D_Date}</p>
-                <p>Season: {ele.season}</p>
-                <p>Status: {ele.status}</p>
-                <p>Home Team Score: {ele.home_team_score}</p>
-                <p>Division: {ele.home_team.division}</p>
-              </div>
-
-              <h2>VS</h2>
-
-              <div className="Right">
-                <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ89WO_fHZw0T-t0u34FnvUtmuVYTvDkaY9ROJEDwe2Dw&s"
-                  alt="bl"
-                />
-                <span className="Result">
-                  <h3 className="Result">{ele.visitor_team.full_name} </h3>
-                  <h3
-                    className={
-                      ele.home_team_score < ele.visitor_team_score
-                        ? "WON"
-                        : ele.home_team_score > ele.visitor_team_score
-                        ? "LOST"
-                        : "TIE"
-                    }
-                  >
-                    {ele.home_team_score < ele.visitor_team_score
-                      ? "WON"
-                      : ele.home_team_score > ele.visitor_team_score
-                      ? "LOST"
-                      : "TIE"}
-                  </h3>
-                </span>
-                <p>Date: {D_Date}</p>
-                <p>Season: {ele.season}</p>
-                <p>Status: {ele.status}</p>
-                <p>Visitor Team Score: {ele.visitor_team_score}</p>
-                <p>Division: {ele.visitor_team.division}</p>
-              </div>
-            </div>
-          );
-        })}
+      <ReactPaginate
+        previousLabel={"← Previous"}
+        nextLabel={"Next →"}
+        pageCount={pageCount}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination"}
+        previousLinkClassName={"pagination__link"}
+        nextLinkClassName={"pagination__link"}
+        disabledClassName={"pagination__link__disabled"}
+        activeClassName={"pagination__link__active"}
+      />
     </>
   );
 };
