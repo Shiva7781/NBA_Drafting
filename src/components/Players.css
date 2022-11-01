@@ -1,0 +1,84 @@
+.PlayerNameInput label,
+input {
+    vertical-align: middle;
+    font-size: large;
+    font-weight: 500;
+    margin: 0.7%;
+}
+
+.Players {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 21px;
+    margin: 2% 1% 2% 1%;
+}
+
+.Players>div {
+    display: grid;
+    place-items: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 7px;
+    padding: 21px 0px 21px 0px;
+    /* border: 1px solid red; */
+}
+
+.Players img {
+    width: 151px;
+    height: fit-content;
+    border-radius: 51%;
+    margin-bottom: 3%;
+}
+
+.Players p {
+    padding: 1px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    /* border: 1px solid red; */
+}
+
+.Players button {
+    margin-top: 3%;
+    border: none;
+    border-radius: 11px;
+    font-weight: lighter;
+    padding: 3%;
+    background-color: rgb(145, 59, 145);
+    color: white;
+    cursor: pointer;
+}
+
+.Players button:hover {
+    background-color: coral;
+}
+
+.NO_DetailsDiv {
+    display: none;
+}
+
+.DetailsDiv {
+    width: 50%;
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
+.DetailsDiv p {
+    text-align: start;
+    margin: 7px 0px 0px 0px;
+}
+
+.DetailsDiv h2 {
+    text-align: start;
+}
+
+@media only screen and (min-width: 721px) and (max-width: 1442px) {
+    .Players {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .Players {
+        grid-template-columns: repeat(1, 1fr);
+        margin: 3%;
+    }
+}

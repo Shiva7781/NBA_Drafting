@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Style.css";
+import "./Games.css";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import "./PaginationComp.css";
@@ -138,15 +138,15 @@ const Games = () => {
                   ele.home_team_score > ele.visitor_team_score
                     ? "WON"
                     : ele.home_team_score < ele.visitor_team_score
-                    ? "LOST"
-                    : "TIE"
+                      ? "LOST"
+                      : "TIE"
                 }
               >
                 {ele.home_team_score > ele.visitor_team_score
                   ? "WON"
                   : ele.home_team_score < ele.visitor_team_score
-                  ? "LOST"
-                  : "TIE"}
+                    ? "LOST"
+                    : "TIE"}
               </h3>
             </span>
             <p>Date: {D_Date}</p>
@@ -170,15 +170,15 @@ const Games = () => {
                   ele.home_team_score < ele.visitor_team_score
                     ? "WON"
                     : ele.home_team_score > ele.visitor_team_score
-                    ? "LOST"
-                    : "TIE"
+                      ? "LOST"
+                      : "TIE"
                 }
               >
                 {ele.home_team_score < ele.visitor_team_score
                   ? "WON"
                   : ele.home_team_score > ele.visitor_team_score
-                  ? "LOST"
-                  : "TIE"}
+                    ? "LOST"
+                    : "TIE"}
               </h3>
             </span>
             <p>Date: {D_Date}</p>

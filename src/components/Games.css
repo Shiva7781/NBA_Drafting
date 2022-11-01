@@ -1,0 +1,113 @@
+.AllInput {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1%;
+
+    /* border: 1px solid red; */
+}
+
+.AllInput div {
+    margin: 0px 7% 0px 7%;
+    /* border: 1px solid red; */
+}
+
+.Games {
+    width: 55%;
+    height: fit-content;
+    margin: auto;
+    margin-bottom: 1%;
+    border-radius: 7px;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(201, 233, 223);
+
+    /* border: 1px solid red; */
+}
+
+.Left,
+.Right {
+    margin: 7px;
+
+    /* border: 1px solid red; */
+}
+
+.Games img {
+    width: 111px;
+    height: fit-content;
+    border-radius: 51%;
+    margin-bottom: 3%;
+}
+
+.Games h2 {
+    margin-top: 21%;
+    padding: 0px 7px 0px 7px;
+
+    /* border: 1px solid red; */
+}
+
+p {
+    text-align: left;
+}
+
+.Result {
+    display: flex;
+}
+
+.Result h3 {
+    padding: 7px;
+    margin-right: 7px;
+
+    /* border: 1px solid red; */
+}
+
+.WON {
+    color: green;
+    background-color: rgb(251, 221, 221);
+    border-radius: 7px;
+}
+
+.LOST {
+    color: red;
+    background-color: rgb(251, 221, 221);
+    border-radius: 7px;
+}
+
+.TIE {
+    color: rgb(163, 196, 96);
+    background-color: rgb(251, 221, 221);
+    border-radius: 7px;
+}
+
+@media screen and (max-width: 720px) {
+    .AllInput div {
+        margin: 0%;
+    }
+
+    .AllInput input {
+        width: 111px;
+    }
+
+    .Games {
+        width: 88%;
+        padding: 3%;
+    }
+
+    .Left,
+    .Right {
+        padding: 0px;
+        margin: 0%;
+    }
+
+    .Games h2 {
+        padding: 3%;
+    }
+
+    .Result {
+        display: grid;
+    }
+
+    .Result h3 {
+        margin: auto;
+    }
+}

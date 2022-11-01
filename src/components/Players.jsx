@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Style.css";
+import "./Players.css";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import "./PaginationComp.css";
